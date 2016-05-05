@@ -38,13 +38,10 @@ args = parser.parse_args()
 
 batchsize = args.batchsize
 n_epoch = args.epoch
-n_units = args.unit
 
 print('GPU: {}'.format(args.gpu))
-print('# unit: {}'.format(args.unit))
 print('# Minibatch-size: {}'.format(args.batchsize))
 print('# epoch: {}'.format(args.epoch))
-print('Network type: {}'.format(args.net))
 print('')
 
 # Prepare dataset
@@ -66,16 +63,11 @@ x_test = x_test.reshape((len(x_test), 1, 28, 28))
 
 
 # Prepare multi-layer perceptron model, defined in net.py
-if args.net == 'simple':
-    model = L.Classifier(net.MnistCNN())
-    if args.gpu >= 0:
-        cuda.get_device(args.gpu).use()
-        model.to_gpu()
-    xp = np if args.gpu < 0 else cuda.cupy
-elif args.net == 'parallel':
-    cuda.check_cuda_available()
-    model = L.Classifier(net.MnistMLPParallel(784, n_units, 10))
-    xp = cuda.cupy
+model = L.Classifier(net.MnistCNN())
+if args.gpu >= 0:
+    cuda.get_device(args.gpu).use()
+    model.to_gpu()
+xp = np if args.gpu < 0 else cuda.cupy
 
 # Setup optimizer
 optimizer = optimizers.Adam()

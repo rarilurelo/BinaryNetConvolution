@@ -2,3 +2,5 @@
 *.pkl
 *.gz
 *.swp
+*.pdf
+*.dot
