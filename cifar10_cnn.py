@@ -42,22 +42,23 @@ args = parser.parse_args()
 
 batchsize = args.batchsize
 n_epoch = args.epoch
-n_units = args.unit
 
 print('GPU: {}'.format(args.gpu))
-print('# unit: {}'.format(args.unit))
 print('# Minibatch-size: {}'.format(args.batchsize))
 print('# epoch: {}'.format(args.epoch))
-print('Network type: {}'.format(args.net))
 print('')
 
 # Prepare dataset
 print('load cifar10 dataset from keras')
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
-
-y_train = np_utils.to_categorical(y_train, nb_classes)
-y_test = np_utils.to_categorical(y_test, nb_classes)
+x_train /= 255
+x_test /= 255
+x_train = x_train.astype(np.float32)
+x_test = x_test.astype(np.float32)
+y_train = y_train.reshape((len(y_train),)).astype(np.int32)
+y_test = y_test.reshape((len(y_test),)).astype(np.int32)
 print('datasets shape: {}'.format(x_train.shape))
+N = len(x_train)
 
 
 N_test = y_test.size
@@ -65,16 +66,11 @@ N_test = y_test.size
 
 
 # Prepare multi-layer perceptron model, defined in net.py
-if args.net == 'simple':
-    model = L.Classifier(net.MnistCNN())
-    if args.gpu >= 0:
-        cuda.get_device(args.gpu).use()
-        model.to_gpu()
-    xp = np if args.gpu < 0 else cuda.cupy
-elif args.net == 'parallel':
-    cuda.check_cuda_available()
-    model = L.Classifier(net.MnistMLPParallel(784, n_units, 10))
-    xp = cuda.cupy
+model = L.Classifier(net.Cifar10CNN())
+if args.gpu >= 0:
+    cuda.get_device(args.gpu).use()
+    model.to_gpu()
+xp = np if args.gpu < 0 else cuda.cupy
 
 # Setup optimizer
 optimizer = optimizers.Adam()
