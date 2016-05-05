@@ -28,14 +28,10 @@ parser.add_argument('--initmodel', '-m', default='',
                     help='Initialize the model from given file')
 parser.add_argument('--resume', '-r', default='',
                     help='Resume the optimization from snapshot')
-parser.add_argument('--net', '-n', choices=('simple', 'parallel'),
-                    default='simple', help='Network type')
 parser.add_argument('--gpu', '-g', default=-1, type=int,
                     help='GPU ID (negative value indicates CPU)')
 parser.add_argument('--epoch', '-e', default=20, type=int,
                     help='number of epochs to learn')
-parser.add_argument('--unit', '-u', default=1000, type=int,
-                    help='number of units')
 parser.add_argument('--batchsize', '-b', type=int, default=100,
                     help='learning minibatch size')
 args = parser.parse_args()
