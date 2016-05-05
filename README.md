@@ -19,6 +19,8 @@ But I don't implement these below.
 ## Usage
 `./mnist_cnn.py`
 
+`./cifar10_cnn.py`
+
 You can choose options
 + gpu
 + epoch
