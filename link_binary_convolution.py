@@ -2,6 +2,7 @@ import numpy
 
 from chainer.functions.connection import convolution_2d
 from chainer import link
+import function_binary_convolution_2d
 
 
 class BinaryConvolution2D(link.Link):
@@ -47,7 +48,7 @@ class BinaryConvolution2D(link.Link):
         self.use_cudnn = use_cudnn
 
         W_shape = (out_channels, in_channels, kh, kw)
-        super(Convolution2D, self).__init__(W=W_shape)
+        super(BinaryConvolution2D, self).__init__(W=W_shape)
 
         if initialW is not None:
             self.W.data[...] = initialW

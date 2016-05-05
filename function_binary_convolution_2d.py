@@ -29,7 +29,7 @@ def _pair(x):
     return x, x
 
 
-class Convolution2DFunction(function.Function):
+class BinaryConvolution2DFunction(function.Function):
 
     def __init__(self, stride=1, pad=0, use_cudnn=True):
         self.sy, self.sx = _pair(stride)
@@ -242,7 +242,7 @@ class Convolution2DFunction(function.Function):
             return gx, gW, gb
 
 
-def convolution_2d(x, W, b=None, stride=1, pad=0, use_cudnn=True):
+def binary_convolution_2d(x, W, b=None, stride=1, pad=0, use_cudnn=True):
     """Two-dimensional convolution function.
 
     This is an implementation of two-dimensional binary convolution in ConvNets.
@@ -300,7 +300,7 @@ def convolution_2d(x, W, b=None, stride=1, pad=0, use_cudnn=True):
     .. seealso:: :class:`Convolution2D`
 
     """
-    func = Convolution2DFunction(stride, pad, use_cudnn)
+    func = BinaryConvolution2DFunction(stride, pad, use_cudnn)
     if b is None:
         return func(x, W)
     else:
