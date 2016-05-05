@@ -5,7 +5,7 @@ There are three different point from ordinary CNN.
 
 1. Using Binarized Weight
 2. Using Binarized Input
-3. Using weight clip that constraine gradient to $-1 < x < 1$
+3. Using weight clip that constraine gradient to -1 < x < 1
 
 But I don't implement these below.
 
@@ -31,4 +31,7 @@ You can choose options
 
 `net.py` defines network
 
-`weight_clip.py` constraines gradient to $-1 < x < 1$ at update step
+`weight_clip.py` constraines gradient to -1 < x < 1 at update step
+
+## Reference
+I implemented these codes hillbig/binary_net as reference
